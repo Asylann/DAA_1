@@ -1,5 +1,7 @@
 package com.example;
 
+import com.example.util.Metrics;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
