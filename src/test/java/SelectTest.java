@@ -1,14 +1,17 @@
-package com.example;
-
+import com.example.CsvWriter;
 import com.example.algorithm.DeterministicSelect;
 import com.example.util.Metrics;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class SelectTest {
+    @Test
+    void DeterministicTest() throws IOException {
         int n = 100;
         int[] arr = new int[n];
         Random rnd = new Random();
@@ -20,16 +23,18 @@ public class Main {
 
         CsvWriter csvWriter = new CsvWriter("result.csv");
         Metrics m = new Metrics();
-        m.setInputSize(n);
 
         int k = 7;
         DeterministicSelect deterministicSelect = new DeterministicSelect();
         m.startTime();
-        deterministicSelect.select(arr,k,m);
+        int result = deterministicSelect.select(arr,k,m);
         m.stopTime();
         Arrays.sort(arr);
         int expect = arr[k];
-        csvWriter.writeRow("QuickSort",m);
+
+        assertEquals(expect,result);
+        System.out.println(result);
+        csvWriter.writeRow("DeterministicTest",m);
         csvWriter.close();
     }
 }

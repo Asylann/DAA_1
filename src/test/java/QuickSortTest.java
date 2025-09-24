@@ -25,7 +25,6 @@ public class QuickSortTest {
 
         CsvWriter csvWriter = new CsvWriter("result.csv");
         Metrics m = new Metrics();
-        m.setInputSize(n);
 
         QuickSort quickSort = new QuickSort();
         m.startTime();
