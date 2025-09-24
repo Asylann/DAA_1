@@ -1,7 +1,7 @@
 package com.example.algorithm;
 
 import com.example.util.Metrics;
-import com.example.util.SortUtils;
+import com.example.util.AlgoUtils;
 
 import java.util.Arrays;
 
@@ -35,9 +35,9 @@ public class DeterministicSelect {
 
         while (i <= gt) {
             if (arr[i] < pivot) {
-                SortUtils.swap(arr, lt++, i++);
+                AlgoUtils.swap(arr, lt++, i++);
             } else if (arr[i] > pivot) {
-                SortUtils.swap(arr, i, gt--);
+                AlgoUtils.swap(arr, i, gt--);
             } else {
                 i++;
             }
@@ -78,7 +78,7 @@ public class DeterministicSelect {
             int subEnd = Math.min(i + 4, end);
             Arrays.sort(arr, i, subEnd + 1);
             int medianIdx = i + (subEnd - i) / 2;
-            SortUtils.swap(arr, start + medCount, medianIdx);
+            AlgoUtils.swap(arr, start + medCount, medianIdx);
             medCount++;
         }
 
