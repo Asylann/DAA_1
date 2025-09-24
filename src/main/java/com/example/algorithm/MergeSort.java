@@ -1,7 +1,7 @@
 package com.example.algorithm;
 
 import com.example.util.Metrics;
-import com.example.util.SortUtils;
+import com.example.util.AlgoUtils;
 
 public class MergeSort {
     private static final int CUTOFF = 12;
@@ -25,7 +25,7 @@ public class MergeSort {
 
         // cutoff usage
         if (right - left + 1 <= CUTOFF) {
-            SortUtils.insertionSort(arr, left, right);
+            AlgoUtils.insertionSort(arr, left, right);
             metrics.exitRecursion();
             return;
         }

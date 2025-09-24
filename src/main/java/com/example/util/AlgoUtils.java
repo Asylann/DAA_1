@@ -1,6 +1,8 @@
 package com.example.util;
 
-public class SortUtils {
+import com.example.algorithm.Point;
+
+public class AlgoUtils {
     public static int partition(int[] arr, int start, int end) {
         int pivot = arr[end];
         int i = start - 1;
@@ -32,5 +34,11 @@ public class SortUtils {
             }
             arr[j + 1] = key;
         }
+    }
+
+    public static double distance(Point a, Point b) {
+        double dx = a.x - b.x;
+        double dy = a.y - b.y;
+        return Math.sqrt(dx * dx + dy * dy);
     }
 }

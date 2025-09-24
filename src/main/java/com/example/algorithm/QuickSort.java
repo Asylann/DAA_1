@@ -1,7 +1,7 @@
 package com.example.algorithm;
 
 import com.example.util.Metrics;
-import com.example.util.SortUtils;
+import com.example.util.AlgoUtils;
 
 import java.util.Random;
 
@@ -21,10 +21,10 @@ public class QuickSort {
         while (start < end) {
             // random pivot selecting
             int pivotIndex = start + random.nextInt(end - start + 1);
-            SortUtils.swap(arr, pivotIndex, end);
+            AlgoUtils.swap(arr, pivotIndex, end);
 
             // partition around random pivot
-            int p = SortUtils.partition(arr, start, end);
+            int p = AlgoUtils.partition(arr, start, end);
             if (p - start < end - p) {
                 metrics.enterRecursion();
                 quickSort(arr, start, p - 1, metrics);
