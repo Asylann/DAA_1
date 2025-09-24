@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.algorithm.MergeSort;
+import com.example.algorithm.QuickSort;
 import com.example.util.Metrics;
 
 import java.io.IOException;
@@ -19,15 +19,15 @@ public class Main {
         CsvWriter csvWriter = new CsvWriter("result.csv");
         Metrics m = new Metrics();
         m.setInputSize(n);
-        MergeSort mergeSort = new MergeSort();
+        QuickSort quickSort= new QuickSort();
         m.startTime();
-        mergeSort.sort(arr,m);
+        quickSort.sort(arr,m);
         m.stopTime();
         Arrays.sort(arr);
         for (int i= 0;i<n;i++) {
             System.out.println(arr[i]);
         }
-        csvWriter.writeRow("MergeSort",m);
+        csvWriter.writeRow("QuickSort",m);
         csvWriter.close();
     }
 }
