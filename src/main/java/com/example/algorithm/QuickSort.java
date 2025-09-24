@@ -12,6 +12,7 @@ public class QuickSort {
         if (arr==null || arr.length<=1) {
             return;
         }
+        metrics.setInputSize(arr.length);
         metrics.enterRecursion();
         quickSort(arr,0,arr.length-1,metrics);
         metrics.exitRecursion();

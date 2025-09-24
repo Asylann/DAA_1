@@ -24,7 +24,6 @@ public class MergeSortTest {
 
         CsvWriter csvWriter = new CsvWriter("result.csv");
         Metrics m = new Metrics();
-        m.setInputSize(n);
 
         MergeSort mergeSort = new MergeSort();
         m.startTime();

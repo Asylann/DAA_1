@@ -1,6 +1,7 @@
 package com.example.algorithm;
 
 import com.example.util.Metrics;
+import com.example.util.SortUtils;
 
 public class MergeSort {
     private static final int CUTOFF = 12;
@@ -9,6 +10,7 @@ public class MergeSort {
         int[] aux = new int[array.length];
         metrics.addAllocation(array.length);
 
+        metrics.setInputSize(array.length);
         // start the main algorithm
         mergeSort(array, aux, 0, array.length - 1, metrics);
     }
@@ -23,7 +25,7 @@ public class MergeSort {
 
         // cutoff usage
         if (right - left + 1 <= CUTOFF) {
-            insertionSort(arr, left, right);
+            SortUtils.insertionSort(arr, left, right);
             metrics.exitRecursion();
             return;
         }
@@ -55,18 +57,6 @@ public class MergeSort {
         }
         while (j <= right) {
             arr[k++] = aux[j++];
-        }
-    }
-
-    private void insertionSort(int[] arr, int left, int right) {
-        for (int i = left + 1; i <= right; i++) {
-            int key = arr[i];
-            int j = i - 1;
-            while (j >= left && arr[j] > key) {
-                arr[j + 1] = arr[j];
-                j--;
-            }
-            arr[j + 1] = key;
         }
     }
 }
