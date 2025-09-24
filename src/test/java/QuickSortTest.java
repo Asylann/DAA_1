@@ -1,5 +1,6 @@
 import com.example.CsvWriter;
 import com.example.algorithm.MergeSort;
+import com.example.algorithm.QuickSort;
 import com.example.util.Metrics;
 import org.junit.jupiter.api.Test;
 
@@ -9,9 +10,9 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MergeSortTest {
+public class QuickSortTest {
     @Test
-    void MergeTest() throws IOException {
+    void QuickTest() throws IOException {
         int n = 100; // any number of length of array
         int[] arr = new int[n];
         Random rnd = new Random();
@@ -26,9 +27,9 @@ public class MergeSortTest {
         Metrics m = new Metrics();
         m.setInputSize(n);
 
-        MergeSort mergeSort = new MergeSort();
+        QuickSort quickSort = new QuickSort();
         m.startTime();
-        mergeSort.sort(arr,m);
+        quickSort.sort(arr,m);
         m.stopTime();
 
         Arrays.sort(copy); // coping for checking
@@ -42,7 +43,7 @@ public class MergeSortTest {
         }
 
         assertTrue(isCorrect);
-        csvWriter.writeRow("MergeSort",m);
+        csvWriter.writeRow("QuickSort",m);
         csvWriter.close();
     }
 }
