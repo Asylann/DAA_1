@@ -1,5 +1,5 @@
-import com.example.CsvWriter;
 import com.example.algorithm.MergeSort;
+import com.example.util.CsvWriter;
 import com.example.util.Metrics;
 import org.junit.jupiter.api.Test;
 
@@ -7,41 +7,49 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MergeSortTest {
+    CsvWriter csvWriter = new CsvWriter("result.csv");
+    Random random = new Random();
+
+    public MergeSortTest() throws IOException {
+    }
+
     @Test
-    void MergeTest() throws IOException {
-        int n = 100; // any number of length of array
-        int[] arr = new int[n];
-        Random rnd = new Random();
+    void mergeSortCorrectness() {
+        int[] arr = random.ints(2000, -5000, 5000).toArray();
+        int[] copy = arr.clone();
+        Arrays.sort(copy);
 
-        for (int i= 0;i<n;i++) {
-            arr[i] = 1+rnd.nextInt(100); // from 1 to 100
-        }
+        Metrics metrics = new Metrics();
+        MergeSort mergeSort = new  MergeSort();
 
-        int[] copy = Arrays.copyOfRange(arr,0,arr.length);
+        metrics.startTime();
+        mergeSort.sort(arr, metrics);
+        metrics.stopTime();
+        csvWriter.writeRow("MergeSort",metrics);
 
-        CsvWriter csvWriter = new CsvWriter("result.csv");
-        Metrics m = new Metrics();
+        assertArrayEquals(copy, arr);
+    }
 
-        MergeSort mergeSort = new MergeSort();
-        m.startTime();
-        mergeSort.sort(arr,m);
-        m.stopTime();
+    @Test
+    void mergeSortSmallCutoff() {
+        int[] arr = {5, 3, 1, 4, 2};
+        int[] copy = arr.clone();
+        Arrays.sort(copy);
 
-        Arrays.sort(copy); // coping for checking
+        Metrics metrics = new Metrics();
+        MergeSort mergeSort = new  MergeSort();
 
-        boolean isCorrect = true;
-        for (int i= 0;i<n;i++) {
-            if (copy[i]!=arr[i]) {
-                isCorrect = false;
-            }
-            System.out.printf("Mine:%d, Arrays.sort:%d\n",arr[i],copy[i]);
-        }
+        metrics.startTime();
+        mergeSort.sort(arr, metrics);
+        metrics.stopTime();
 
-        assertTrue(isCorrect);
-        csvWriter.writeRow("MergeSort",m);
+        csvWriter.writeRow("MergeSort",metrics);
         csvWriter.close();
+
+        assertArrayEquals(copy, arr);
     }
 }

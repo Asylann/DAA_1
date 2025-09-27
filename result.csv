@@ -1,12 +1,8 @@
-Algorithm,InputSize,Duration,allocation,MaxDepthMergeSort
-DeterministicTest,100,1479900,0,0
-DeterministicTest,100,1475200,0,0
-DeterministicTest,100,1677200,51,8
-DeterministicTest,100,1504100,46,6
-DeterministicTest,100,1671700,49,7
-ClosestPair,100,5116900,0,7
-DeterministicTest,100,2615100,46,7
-ClosestPair,100,5643600,2264,7
-ClosestPair,100,5387600,2264,7
-ClosestPair,100,4532700,2264,7
-ClosestPair,100,5594300,2264,7
+Algorithm; InputSize; Duration(ms); Allocation; MaxDepthMergeSort
+ClosestPair;100;3,255400;2264;7
+ClosestPair;5000;13,799400;230000;12
+MergeSort;5;0,012700;5;1
+MergeSort;2000;0,982400;2000;9
+QuickSort;1000;0,950100;0;7
+QuickSort;10000;1,561000;0;9
+DeterministicSelect;200;0,146800;98;7

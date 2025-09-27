@@ -1,6 +1,4 @@
-package com.example;
-
-import com.example.util.Metrics;
+package com.example.util;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,11 +11,11 @@ public class CsvWriter {
         this.printWriter = new PrintWriter(new FileWriter(fileName,true));
     }
 
-    public void writeRow(String algorithm,Metrics metrics) {
-        printWriter.printf("%s,%d,%d,%d,%d%n",
+    public void writeRow(String algorithm, Metrics metrics) {
+        printWriter.printf("%s;%d;%.6f;%d;%d%n",
                 algorithm,
                 metrics.getInputSize(),
-                metrics.getDuration(),
+                metrics.getDuration() / 1_000_000.0, // ms
                 metrics.getAllocations(),
                 metrics.getMaxDepth());
         printWriter.flush();
