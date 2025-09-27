@@ -1,6 +1,6 @@
-import com.example.CsvWriter;
 import com.example.algorithm.ClosestPair;
 import com.example.algorithm.Point;
+import com.example.util.CsvWriter;
 import com.example.util.Metrics;
 import org.junit.jupiter.api.Test;
 
@@ -8,46 +8,60 @@ import java.io.IOException;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ClosestPairTest {
-    @Test
-    void ClosestTest() throws IOException {
-        int n = 100;
-        Point[] pts = new Point[n];
-        Random rnd = new Random();
+    CsvWriter csvWriter = new CsvWriter("result.csv");
+    Random random = new Random();
 
-        for (int i = 0; i < n; i++) {
-            double x = rnd.nextDouble() * 100.0;
-            double y = rnd.nextDouble() * 100.0;
-            pts[i] = new Point(x, y);
+    public ClosestPairTest() throws IOException {}
+
+    @Test
+    void closestPairMatchesBruteForce() {
+        Point[] points = new Point[100];
+        for (int i = 0; i < 100; i++) {
+            points[i] = new Point(random.nextDouble() * 100, random.nextDouble() * 100);
         }
 
-        CsvWriter csvWriter = new CsvWriter("result.csv");
-        Metrics m = new Metrics();
+        double brute = bruteForce(points);
+        Metrics metrics = new Metrics();
+        metrics.startTime();
+        double fast = ClosestPair.find(points, metrics);
+        metrics.stopTime();
 
-        m.startTime();
-        double found = ClosestPair.find(pts, m);
-        m.stopTime();
-
-        double expect = bruteForce(pts);
-
-        double eps = 1e-6;
-        System.out.printf("ClosestPair: %.8f, BruteForce: %.8f\n", found, expect);
-        assertEquals(expect, found, eps, "ClosestPair result must equal brute-force result within epsilon");
-
-        csvWriter.writeRow("ClosestPair", m);
+        csvWriter.writeRow("ClosestPair",metrics);
         csvWriter.close();
+        assertEquals(brute, fast, 1e-9, "Mismatch for n=" + 100);
     }
 
-    // for testing with brute force finding
+    @Test
+    void closestPairLargeRunsFast() {
+        int n = 5000;
+        Point[] points = new Point[n];
+        for (int i = 0; i < n; i++) {
+            points[i] = new Point(random.nextDouble() * 1e6, random.nextDouble() * 1e6);
+        }
+
+        // Just ensure it runs and returns finite result
+        Metrics metrics = new Metrics();
+        metrics.startTime();
+        double fast = ClosestPair.find(points, metrics);
+        metrics.stopTime();
+
+        csvWriter.writeRow("ClosestPair",metrics);
+
+        csvWriter.close();
+        assertTrue(fast >= 0 && Double.isFinite(fast));
+    }
+
+    // helper for brute force check
     private double bruteForce(Point[] pts) {
         double min = Double.POSITIVE_INFINITY;
         for (int i = 0; i < pts.length; i++) {
             for (int j = i + 1; j < pts.length; j++) {
                 double dx = pts[i].x - pts[j].x;
                 double dy = pts[i].y - pts[j].y;
-                double dist = Math.hypot(dx, dy);
-                if (dist < min) min = dist;
+                min = Math.min(min, Math.sqrt(dx * dx + dy * dy));
             }
         }
         return min;
